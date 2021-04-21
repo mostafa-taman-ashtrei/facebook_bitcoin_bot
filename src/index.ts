@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
+import initRoutes from './routes/initRoutes';
 
 config();
 
@@ -20,7 +21,7 @@ config();
         app.use(morgan('combined', { stream: accessLogStream }));
     }
 
-    app.get('/', (_, res) => res.json({ msg: 'hello world!' }));
+    initRoutes(app);
 
     app.listen(port, () => console.log(`Server is running on port ${port} ...`));
 })();
