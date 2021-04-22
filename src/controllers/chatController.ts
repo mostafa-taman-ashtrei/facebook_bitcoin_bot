@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { Request, Response } from 'express';
 import fetchUsername from '../utils/fetchUsername';
+import { GET_STARTED_RESPONSE } from '../utils/responses';
 import sendMessage from '../utils/sendMessage';
 
 export const getWebhook = (req: Request, res: Response) => {
@@ -75,19 +76,20 @@ const handlePostback = async (sender_psid: string, postback: any) => {
     const username = await fetchUsername(sender_psid);
 
     switch (payload) {
-    case 'GET_STARTED':
-        await sendMessage(sender_psid, { text: `Welcome ${username} to Crypto Bot` });
-        break;
-    case 'yes':
-        await sendMessage(sender_psid, { text: `Great.Send me another pic ${username}` });
-        break;
+        case 'GET_STARTED':
+            await sendMessage(sender_psid, { text: `Welcome ${username} to Crypto Bot` });
+            await sendMessage(sender_psid, GET_STARTED_RESPONSE);
+            break;
+        case 'yes':
+            await sendMessage(sender_psid, { text: `Great.Send me another pic ${username}` });
+            break;
 
-    case 'no':
-        await sendMessage(sender_psid, { text: `Sorry to hear that ${username}, try again` });
-        break;
+        case 'no':
+            await sendMessage(sender_psid, { text: `Sorry to hear that ${username}, try again` });
+            break;
 
-    default:
-        console.log(`${payload} is not recognized ...`);
+        default:
+            console.log(`${payload} is not recognized ...`);
     }
 };
 
