@@ -76,20 +76,29 @@ const handlePostback = async (sender_psid: string, postback: any) => {
     const username = await fetchUsername(sender_psid);
 
     switch (payload) {
-        case 'GET_STARTED':
-            await sendMessage(sender_psid, { text: `Welcome ${username} to Crypto Bot` });
-            await sendMessage(sender_psid, GET_STARTED_RESPONSE);
-            break;
-        case 'yes':
-            await sendMessage(sender_psid, { text: `Great.Send me another pic ${username}` });
-            break;
+    case 'GET_STARTED':
+        await sendMessage(sender_psid, { text: `Welcome ${username} to Crypto Bot` });
+        await sendMessage(sender_psid, GET_STARTED_RESPONSE);
+        break;
 
-        case 'no':
-            await sendMessage(sender_psid, { text: `Sorry to hear that ${username}, try again` });
-            break;
+    case 'GET_COIN_DATA':
+        await sendMessage(sender_psid, { text: 'Getting bitcoin data' });
+        break;
 
-        default:
-            console.log(`${payload} is not recognized ...`);
+    case 'GET_COIN_SENTIMENT':
+        await sendMessage(sender_psid, { text: 'Getting bitcoin twitter sentiment' });
+        break;
+
+    case 'yes':
+        await sendMessage(sender_psid, { text: `Great.Send me another pic ${username}` });
+        break;
+
+    case 'no':
+        await sendMessage(sender_psid, { text: `Sorry to hear that ${username}, try again` });
+        break;
+
+    default:
+        console.log(`${payload} is not recognized ...`);
     }
 };
 

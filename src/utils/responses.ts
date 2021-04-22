@@ -10,6 +10,7 @@ export const GET_STARTED_RESPONSE = {
                 This is a messanger automated bot for bitcoin, 
                 this bot is only for educational purposes 
                 and should not be used to make any financial decisions`,
+                image_url: 'https://fontmeme.com/images/bitcoin-logo-font.jpg',
                 buttons: [
                     {
                         type: 'postback',
