@@ -69,6 +69,23 @@ export const handleMessage = async (sender_psid: string, received_message: any) 
     sendMessage(sender_psid, response);
 };
 
+const handlePostback = (sender_psid: string, postback: any) => {
+    const { payload } = postback;
+
+    switch (payload) {
+    case 'yes':
+        sendMessage(sender_psid, { text: 'yessss' });
+        break;
+
+    case 'no':
+        sendMessage(sender_psid, { text: 'noooo' });
+        break;
+
+    default:
+        console.log(`${payload} is not recognized ...`);
+    }
+};
+
 export const postWebhook = (req: Request, res: Response) => {
     // Parse the request body from the POST
     const { body } = req;
@@ -91,7 +108,7 @@ export const postWebhook = (req: Request, res: Response) => {
                 handleMessage(sender_psid, webhook_event.message);
             } else if (webhook_event.postback) {
                 console.log(webhook_event.postback);
-                // handlePostback(sender_psid, webhook_event.postback);
+                handlePostback(sender_psid, webhook_event.postback);
             }
         });
 
