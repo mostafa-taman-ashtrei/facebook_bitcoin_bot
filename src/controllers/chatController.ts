@@ -70,9 +70,9 @@ export const handleMessage = async (sender_psid: string, received_message: any) 
     sendMessage(sender_psid, response);
 };
 
-const handlePostback = (sender_psid: string, postback: any) => {
+const handlePostback = async (sender_psid: string, postback: any) => {
     const { payload } = postback;
-    const username = fetchUsername(sender_psid);
+    const username = await fetchUsername(sender_psid);
 
     switch (payload) {
     case 'yes':
