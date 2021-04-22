@@ -5,11 +5,8 @@ export const GET_STARTED_RESPONSE = {
         payload: {
             template_type: 'generic',
             elements: [{
-                title: 'Crypto Bot',
-                subtitle: `
-                This is a messanger automated bot for bitcoin, 
-                this bot is only for educational purposes 
-                and should not be used to make any financial decisions`,
+                title: 'Bitcoin Bot',
+                subtitle: 'What would you like to know about bitcoin',
                 image_url: 'https://fontmeme.com/images/bitcoin-logo-font.jpg',
                 buttons: [
                     {

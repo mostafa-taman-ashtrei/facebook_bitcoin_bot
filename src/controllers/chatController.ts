@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { Request, Response } from 'express';
+import { askForCurrency } from '../services/botService';
+import curnecies from '../utils/currencies';
 import fetchUsername from '../utils/fetchUsername';
 import { GET_STARTED_RESPONSE } from '../utils/responses';
 import sendMessage from '../utils/sendMessage';
@@ -29,6 +31,12 @@ export const getWebhook = (req: Request, res: Response) => {
 
 export const handleMessage = async (sender_psid: string, received_message: any) => {
     let response;
+
+    if (received_message.quick_reply.payload) {
+        if (curnecies.includes(received_message.quick_reply.payload)) {
+            await sendMessage(sender_psid, { text: `you chose ${received_message.quick_reply.payload}` });
+        }
+    }
 
     // Check if the message contains text
     if (received_message.text) {
@@ -83,6 +91,7 @@ const handlePostback = async (sender_psid: string, postback: any) => {
 
     case 'GET_COIN_DATA':
         await sendMessage(sender_psid, { text: 'Getting bitcoin data' });
+        await askForCurrency(sender_psid);
         break;
 
     case 'GET_COIN_SENTIMENT':

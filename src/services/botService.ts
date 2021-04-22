@@ -2,7 +2,7 @@
 import request from 'request';
 import curnecies from '../utils/currencies';
 
-export const askForCurrency = (sender_psid: string) => {
+export const askForCurrency = async (sender_psid: string) => {
     const json_body: any = {
         recipient: { id: sender_psid },
         messaging_type: 'RESPONSE',
@@ -18,7 +18,7 @@ export const askForCurrency = (sender_psid: string) => {
         payload: c,
     }));
 
-    request({
+    await request({
         uri: 'https://graph.facebook.com/v6.0/me/messages',
         qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
         method: 'POST',
