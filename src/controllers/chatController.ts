@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { Request, Response } from 'express';
+import fetchUsername from '../utils/fetchUsername';
 import sendMessage from '../utils/sendMessage';
 
 export const getWebhook = (req: Request, res: Response) => {
@@ -71,14 +72,15 @@ export const handleMessage = async (sender_psid: string, received_message: any) 
 
 const handlePostback = (sender_psid: string, postback: any) => {
     const { payload } = postback;
+    const username = fetchUsername(sender_psid);
 
     switch (payload) {
     case 'yes':
-        sendMessage(sender_psid, { text: 'yessss' });
+        sendMessage(sender_psid, { text: `Great.Send me another pic ${username}` });
         break;
 
     case 'no':
-        sendMessage(sender_psid, { text: 'noooo' });
+        sendMessage(sender_psid, { text: `Sorry to hear that ${username}, try again` });
         break;
 
     default:
