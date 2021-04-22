@@ -67,7 +67,7 @@ export const handleMessage = async (sender_psid: string, received_message: any) 
     }
 
     // Sends the response message
-    sendMessage(sender_psid, response);
+    await sendMessage(sender_psid, response);
 };
 
 const handlePostback = async (sender_psid: string, postback: any) => {
@@ -75,12 +75,15 @@ const handlePostback = async (sender_psid: string, postback: any) => {
     const username = await fetchUsername(sender_psid);
 
     switch (payload) {
+    case 'GET_STARTED':
+        await sendMessage(sender_psid, { text: `Welcome ${username} to Crypto Bot` });
+        break;
     case 'yes':
-        sendMessage(sender_psid, { text: `Great.Send me another pic ${username}` });
+        await sendMessage(sender_psid, { text: `Great.Send me another pic ${username}` });
         break;
 
     case 'no':
-        sendMessage(sender_psid, { text: `Sorry to hear that ${username}, try again` });
+        await sendMessage(sender_psid, { text: `Sorry to hear that ${username}, try again` });
         break;
 
     default:

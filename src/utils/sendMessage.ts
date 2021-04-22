@@ -1,6 +1,6 @@
 import request from 'request';
 
-const sendMessage = (sender_psid: string, data: any) => {
+const sendMessage = async (sender_psid: string, data: any) => {
     const request_body = {
         recipient: {
             id: sender_psid,
@@ -8,7 +8,7 @@ const sendMessage = (sender_psid: string, data: any) => {
         message: data,
     };
 
-    request({
+    await request({
         uri: 'https://graph.facebook.com/v6.0/me/messages',
         qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
         method: 'POST',
