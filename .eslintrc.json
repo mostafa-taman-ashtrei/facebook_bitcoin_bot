@@ -29,7 +29,8 @@
             4
         ],
         "import/extensions": "off",
-        "camelcase": "off"
+        "camelcase": "off",
+        "array-callback-return": "off"
     },
     "settings": {
         "import/resolver": {
