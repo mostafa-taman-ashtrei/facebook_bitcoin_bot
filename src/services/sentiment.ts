@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import Twitter from 'twitter';
 import { WordTokenizer, SentimentAnalyzer, PorterStemmer } from 'natural';
 import sw from 'stopword';
@@ -24,10 +23,6 @@ const getTweetSentiment = (tweet: string) => {
     const analyzer = new SentimentAnalyzer('English', PorterStemmer, 'afinn');
     const preprocessedTweet = preprocessTweet(tweet);
     const analysis = analyzer.getSentiment(preprocessedTweet);
-
-    if (analysis < 0) console.log(`negative 😢 ${analysis} => ${tweet}`);
-    if (analysis === 0) console.log(`neutral 😐 ${analysis} => ${tweet}`);
-    if (analysis > 0) console.log(`positive 😃 ${analysis} => ${tweet}`);
 
     return analysis;
 };

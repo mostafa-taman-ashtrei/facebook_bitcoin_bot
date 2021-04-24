@@ -30,7 +30,9 @@
         ],
         "import/extensions": "off",
         "camelcase": "off",
-        "array-callback-return": "off"
+        "array-callback-return": "off",
+        "no-case-declarations": "off",
+        "import/prefer-default-export": 0
     },
     "settings": {
         "import/resolver": {

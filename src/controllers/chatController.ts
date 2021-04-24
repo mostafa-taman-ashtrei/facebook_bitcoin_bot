@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { Request, Response } from 'express';
 import { askForCurrency, getCoinData } from '../services/botService';
 import getBitcoinSentiment from '../services/sentiment';
@@ -58,6 +57,7 @@ const handlePostback = async (sender_psid: string, postback: any) => {
     case 'GET_COIN_SENTIMENT':
         // eslint-disable-next-line no-case-declarations
         const sentiment = await getBitcoinSentiment('bitcoin');
+        await sendMessage(sender_psid, GET_STARTED_RESPONSE);
         await sendMessage(sender_psid, { text: sentiment });
         break;
 
@@ -76,11 +76,9 @@ export const postWebhook = (req: Request, res: Response) => {
         body.entry.forEach((entry: any) => {
             // Gets the body of the webhook event
             const webhook_event = entry.messaging[0];
-            console.log(webhook_event);
 
             // Get the sender PSID
             const sender_psid = webhook_event.sender.id;
-            console.log(`Sender PSID: ${sender_psid}`);
 
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function

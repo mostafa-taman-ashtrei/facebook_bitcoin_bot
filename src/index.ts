@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 import initRoutes from './routes/initRoutes';
-import getBitcoinSentiment from './services/sentiment';
 
 config();
 
@@ -23,8 +22,6 @@ config();
     }
 
     initRoutes(app);
-    const sentiment = await getBitcoinSentiment('bitcoin');
-    console.log(sentiment);
 
     app.listen(port, () => console.log(`Server is running on port ${port} ...`));
 })();
