@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { Request, Response } from 'express';
-import { askForCurrency } from '../services/botService';
+import { askForCurrency, getCoinData } from '../services/botService';
 import curnecies from '../utils/currencies';
 import fetchUsername from '../utils/fetchUsername';
 import { GET_STARTED_RESPONSE } from '../utils/responses';
@@ -34,7 +34,8 @@ export const handleMessage = async (sender_psid: string, received_message: any) 
 
     if (received_message.quick_reply.payload) {
         if (curnecies.includes(received_message.quick_reply.payload)) {
-            await sendMessage(sender_psid, { text: `you chose ${received_message.quick_reply.payload}` });
+            const data = await getCoinData(sender_psid, received_message.quick_reply.payload);
+            await sendMessage(sender_psid, { text: data });
         }
     }
 
@@ -90,7 +91,6 @@ const handlePostback = async (sender_psid: string, postback: any) => {
         break;
 
     case 'GET_COIN_DATA':
-        await sendMessage(sender_psid, { text: 'Getting bitcoin data' });
         await askForCurrency(sender_psid);
         break;
 
