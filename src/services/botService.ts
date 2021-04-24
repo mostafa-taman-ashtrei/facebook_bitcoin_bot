@@ -33,15 +33,14 @@ export const askForCurrency = async (sender_psid: string) => {
 };
 
 // eslint-disable-next-line max-len
-export const getCoinData = async (sender_psid: string, currency: string) => new Promise((resolve) => {
+export const getCoinData = async (currency: string): Promise<string> => new Promise((resolve, reject) => {
     request({
         uri: `https://api.nomics.com/v1/currencies/ticker?key=${process.env.API_KEY}&ids=BTC&convert=${currency}`,
         method: 'GET',
     }, (err, _, body) => {
-        if (err) console.log(err);
+        if (err) reject(err);
         const jsonBody = JSON.parse(body);
         const result = `The price for ${jsonBody[0].name} is ${Math.ceil(jsonBody[0].price)} ${currency}`;
-        console.log(sender_psid);
         resolve(result);
     });
 });

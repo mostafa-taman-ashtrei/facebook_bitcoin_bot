@@ -30,54 +30,12 @@ export const getWebhook = (req: Request, res: Response) => {
 };
 
 export const handleMessage = async (sender_psid: string, received_message: any) => {
-    let response;
-
     if (received_message.quick_reply.payload) {
         if (curnecies.includes(received_message.quick_reply.payload)) {
-            const data = await getCoinData(sender_psid, received_message.quick_reply.payload);
+            const data = await getCoinData(received_message.quick_reply.payload);
             await sendMessage(sender_psid, { text: data });
         }
     }
-
-    // Check if the message contains text
-    if (received_message.text) {
-        // Create the payload for a basic text message
-
-        response = {
-            text: `You sent the message: "${received_message.text}". Now send me an image!`,
-        };
-    } else if (received_message.attachments) {
-        // Gets the URL of the message attachment
-        const attachment_url = received_message.attachments[0].payload.url;
-        response = {
-            attachment: {
-                type: 'template',
-                payload: {
-                    template_type: 'generic',
-                    elements: [{
-                        title: 'Is this the right picture?',
-                        subtitle: 'Tap a button to answer.',
-                        image_url: attachment_url,
-                        buttons: [
-                            {
-                                type: 'postback',
-                                title: 'Yes!',
-                                payload: 'yes',
-                            },
-                            {
-                                type: 'postback',
-                                title: 'No!',
-                                payload: 'no',
-                            },
-                        ],
-                    }],
-                },
-            },
-        };
-    }
-
-    // Sends the response message
-    await sendMessage(sender_psid, response);
 };
 
 const handlePostback = async (sender_psid: string, postback: any) => {
@@ -96,14 +54,6 @@ const handlePostback = async (sender_psid: string, postback: any) => {
 
     case 'GET_COIN_SENTIMENT':
         await sendMessage(sender_psid, { text: 'Getting bitcoin twitter sentiment' });
-        break;
-
-    case 'yes':
-        await sendMessage(sender_psid, { text: `Great.Send me another pic ${username}` });
-        break;
-
-    case 'no':
-        await sendMessage(sender_psid, { text: `Sorry to hear that ${username}, try again` });
         break;
 
     default:
